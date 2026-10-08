@@ -25,6 +25,7 @@ counts of the categorical variables `species`, `sex`, and `island`. We
 can use `ftable` along with `dplyr`’s `select`:
 
 ``` r
+
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
@@ -59,27 +60,32 @@ that we can easily export to a report or presentation.
 `ftable`:
 
 ``` r
+
 library(ivo.table)
 
 penguins |> select(species, sex, island) |> ivo_table()
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |       |           |
-|-----------|-----------|---------|-------|-----------|
-| sex       | island    | Biscoe  | Dream | Torgersen |
-| Adelie    | female    | 22      | 27    | 24        |
-|           | male      | 22      | 28    | 23        |
-|           | (Missing) | 0       | 1     | 5         |
-| Chinstrap | female    | 0       | 34    | 0         |
-|           | male      | 0       | 34    | 0         |
-|           | (Missing) | 0       | 0     | 0         |
-| Gentoo    | female    | 58      | 0     | 0         |
-|           | male      | 61      | 0     | 0         |
-|           | (Missing) | 5       | 0     | 0         |
+|           |           | species |           |        |
+|-----------|-----------|---------|-----------|--------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo |
+| female    | Biscoe    | 22      | 0         | 58     |
+|           | Dream     | 27      | 34        | 0      |
+|           | Torgersen | 24      | 0         | 0      |
+| male      | Biscoe    | 22      | 0         | 61     |
+|           | Dream     | 28      | 34        | 0      |
+|           | Torgersen | 23      | 0         | 0      |
+| (Missing) | Biscoe    | 0       | 0         | 5      |
+|           | Dream     | 1       | 0         | 0      |
+|           | Torgersen | 5       | 0         | 0      |
 
 The resulting table can easily be exported to a Word document:
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table() |> 
@@ -89,46 +95,54 @@ penguins |>
 You can add row and column sums:
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table(colsums = TRUE,
             rowsums = TRUE)
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |       |           |       |
-|-----------|-----------|---------|-------|-----------|-------|
-| sex       | island    | Biscoe  | Dream | Torgersen | Total |
-| Adelie    | female    | 22      | 27    | 24        | 73    |
-|           | male      | 22      | 28    | 23        | 73    |
-|           | (Missing) | 0       | 1     | 5         | 6     |
-| Chinstrap | female    | 0       | 34    | 0         | 34    |
-|           | male      | 0       | 34    | 0         | 34    |
-|           | (Missing) | 0       | 0     | 0         | 0     |
-| Gentoo    | female    | 58      | 0     | 0         | 58    |
-|           | male      | 61      | 0     | 0         | 61    |
-|           | (Missing) | 5       | 0     | 0         | 5     |
-| Total     |           | 168     | 124   | 52        | 344   |
+|           |           | species |           |        |       |
+|-----------|-----------|---------|-----------|--------|-------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo | Total |
+| female    | Biscoe    | 22      | 0         | 58     | 80    |
+|           | Dream     | 27      | 34        | 0      | 61    |
+|           | Torgersen | 24      | 0         | 0      | 24    |
+| male      | Biscoe    | 22      | 0         | 61     | 83    |
+|           | Dream     | 28      | 34        | 0      | 62    |
+|           | Torgersen | 23      | 0         | 0      | 23    |
+| (Missing) | Biscoe    | 0       | 0         | 5      | 5     |
+|           | Dream     | 1       | 0         | 0      | 1     |
+|           | Torgersen | 5       | 0         | 0      | 5     |
+| Total     |           | 152     | 68        | 124    | 344   |
 
 Or show percentages instead of counts, e.g. computed by column:
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table(percent_by = "col")
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |        |           |
-|-----------|-----------|---------|--------|-----------|
-| sex       | island    | Biscoe  | Dream  | Torgersen |
-| Adelie    | female    | 13,1 %  | 21,8 % | 46,2 %    |
-|           | male      | 13,1 %  | 22,6 % | 44,2 %    |
-|           | (Missing) | 0,0 %   | 0,8 %  | 9,6 %     |
-| Chinstrap | female    | 0,0 %   | 27,4 % | 0,0 %     |
-|           | male      | 0,0 %   | 27,4 % | 0,0 %     |
-|           | (Missing) | 0,0 %   | 0,0 %  | 0,0 %     |
-| Gentoo    | female    | 34,5 %  | 0,0 %  | 0,0 %     |
-|           | male      | 36,3 %  | 0,0 %  | 0,0 %     |
-|           | (Missing) | 3,0 %   | 0,0 %  | 0,0 %     |
+|           |           | species |           |        |
+|-----------|-----------|---------|-----------|--------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo |
+| female    | Biscoe    | 14,5 %  | 0,0 %     | 46,8 % |
+|           | Dream     | 17,8 %  | 50,0 %    | 0,0 %  |
+|           | Torgersen | 15,8 %  | 0,0 %     | 0,0 %  |
+| male      | Biscoe    | 14,5 %  | 0,0 %     | 49,2 % |
+|           | Dream     | 18,4 %  | 50,0 %    | 0,0 %  |
+|           | Torgersen | 15,1 %  | 0,0 %     | 0,0 %  |
+| (Missing) | Biscoe    | 0,0 %   | 0,0 %     | 4,0 %  |
+|           | Dream     | 0,7 %   | 0,0 %     | 0,0 %  |
+|           | Torgersen | 3,3 %   | 0,0 %     | 0,0 %  |
 
 ## Changing the appearance of your tables
 
@@ -140,51 +154,60 @@ Change the font to Courier, use red instead of green, and make the names
 in the `sex` column bold:
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table(color = "red",
             font_name = "Courier",
             bold_cols = 1)
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |       |           |
-|-----------|-----------|---------|-------|-----------|
-| sex       | island    | Biscoe  | Dream | Torgersen |
-| Adelie    | female    | 22      | 27    | 24        |
-|           | male      | 22      | 28    | 23        |
-|           | (Missing) | 0       | 1     | 5         |
-| Chinstrap | female    | 0       | 34    | 0         |
-|           | male      | 0       | 34    | 0         |
-|           | (Missing) | 0       | 0     | 0         |
-| Gentoo    | female    | 58      | 0     | 0         |
-|           | male      | 61      | 0     | 0         |
-|           | (Missing) | 5       | 0     | 0         |
+|           |           | species |           |        |
+|-----------|-----------|---------|-----------|--------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo |
+| female    | Biscoe    | 22      | 0         | 58     |
+|           | Dream     | 27      | 34        | 0      |
+|           | Torgersen | 24      | 0         | 0      |
+| male      | Biscoe    | 22      | 0         | 61     |
+|           | Dream     | 28      | 34        | 0      |
+|           | Torgersen | 23      | 0         | 0      |
+| (Missing) | Biscoe    | 0       | 0         | 5      |
+|           | Dream     | 1       | 0         | 0      |
+|           | Torgersen | 5       | 0         | 0      |
 
 Add a caption and highlight the cell on the fourth row of the third
 column:
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table(caption = "A table with penguins in it",
             highlight_cols = 3,
             highlight_rows = 4)
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |       |           |
-|-----------|-----------|---------|-------|-----------|
-| sex       | island    | Biscoe  | Dream | Torgersen |
-| Adelie    | female    | 22      | 27    | 24        |
-|           | male      | 22      | 28    | 23        |
-|           | (Missing) | 0       | 1     | 5         |
-| Chinstrap | female    | 0       | 34    | 0         |
-|           | male      | 0       | 34    | 0         |
-|           | (Missing) | 0       | 0     | 0         |
-| Gentoo    | female    | 58      | 0     | 0         |
-|           | male      | 61      | 0     | 0         |
-|           | (Missing) | 5       | 0     | 0         |
+|           |           | species |           |        |
+|-----------|-----------|---------|-----------|--------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo |
+| female    | Biscoe    | 22      | 0         | 58     |
+|           | Dream     | 27      | 34        | 0      |
+|           | Torgersen | 24      | 0         | 0      |
+| male      | Biscoe    | 22      | 0         | 61     |
+|           | Dream     | 28      | 34        | 0      |
+|           | Torgersen | 23      | 0         | 0      |
+| (Missing) | Biscoe    | 0       | 0         | 5      |
+|           | Dream     | 1       | 0         | 0      |
+|           | Torgersen | 5       | 0         | 0      |
 
-A table with penguins in it
+A table with penguins in it {.table .cl-d8bad469
+quarto-disable-processing="true"}
 
 `ivo_table` returns a `flextable` object, meaning that all [functions
 used to style
@@ -196,23 +219,27 @@ and change the background colour using
 [`flextable::bg`](https://davidgohel.github.io/flextable/reference/bg.html):
 
 ``` r
+
 penguins |>
   select(species, sex, island) |>
   ivo_table(color = "darkblue") |> 
   flextable::fontsize(size = 8, part = "body") |> 
   flextable::fontsize(size = 12, part = "header") |> 
   flextable::bg(bg = "pink", part = "all")
+#> Warning in flextable::regulartable(df): 'flextable::regulartable' is deprecated.
+#> Use 'flextable' instead.
+#> See help("Deprecated")
 ```
 
-|           |           | species |       |           |
-|-----------|-----------|---------|-------|-----------|
-| sex       | island    | Biscoe  | Dream | Torgersen |
-| Adelie    | female    | 22      | 27    | 24        |
-|           | male      | 22      | 28    | 23        |
-|           | (Missing) | 0       | 1     | 5         |
-| Chinstrap | female    | 0       | 34    | 0         |
-|           | male      | 0       | 34    | 0         |
-|           | (Missing) | 0       | 0     | 0         |
-| Gentoo    | female    | 58      | 0     | 0         |
-|           | male      | 61      | 0     | 0         |
-|           | (Missing) | 5       | 0     | 0         |
+|           |           | species |           |        |
+|-----------|-----------|---------|-----------|--------|
+| sex       | island    | Adelie  | Chinstrap | Gentoo |
+| female    | Biscoe    | 22      | 0         | 58     |
+|           | Dream     | 27      | 34        | 0      |
+|           | Torgersen | 24      | 0         | 0      |
+| male      | Biscoe    | 22      | 0         | 61     |
+|           | Dream     | 28      | 34        | 0      |
+|           | Torgersen | 23      | 0         | 0      |
+| (Missing) | Biscoe    | 0       | 0         | 5      |
+|           | Dream     | 1       | 0         | 0      |
+|           | Torgersen | 5       | 0         | 0      |
